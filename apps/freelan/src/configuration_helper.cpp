@@ -341,9 +341,11 @@ po::options_description get_python_options()
 {
 	po::options_description result("Python options");
 
-	const fs::path python_path_default = get_python_directory();
+	const fs::path python_home_default = get_python_home_directory();
+	const fs::path python_path_default = get_python_path_directory();
 
 	result.add_options()
+	("python.python_home", po::value<fs::path>()->default_value(python_home_default.string()), "The PYTHONHOME to use.")
 	("python.python_path", po::value<fs::path>()->default_value(python_path_default.string()), "The PYTHONPATH to use.")
 	;
 
@@ -455,6 +457,7 @@ void setup_configuration(fl::configuration& configuration, const boost::filesyst
 	configuration.router.maximum_routes_limit = vm["router.maximum_routes_limit"].as<unsigned int>();
 
 	// Python
+	configuration.python.python_home = vm["python.python_home"].as<fs::path>();
 	configuration.python.python_path = vm["python.python_path"].as<fs::path>();
 }
 

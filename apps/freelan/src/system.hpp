@@ -81,12 +81,24 @@ boost::filesystem::path get_home_directory();
  * \return The application directory.
  */
 boost::filesystem::path get_application_directory();
+/**
+ * \brief Get the python path directory.
+ * \return The python path directory.
+ */
+boost::filesystem::path get_python_path_directory();
+
 
 /**
- * \brief Get the python directory.
- * \return The python directory.
+* \brief Get the python home directory.
+* \return The python home directory.
+*/
+boost::filesystem::path get_python_home_directory();
+
+/**
+ * \brief Get the python path directory.
+ * \return The python path directory.
  */
-boost::filesystem::path get_python_directory();
+boost::filesystem::path get_python_path_directory();
 
 /**
  * \brief Get the temporary directory.
