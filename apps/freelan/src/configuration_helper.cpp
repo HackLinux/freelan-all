@@ -52,6 +52,7 @@
 #include <boost/foreach.hpp>
 
 #include "configuration_types.hpp"
+#include "system.hpp"
 
 // This file is generated locally.
 #include <defines.hpp>
@@ -336,6 +337,19 @@ po::options_description get_router_options()
 	return result;
 }
 
+po::options_description get_python_options()
+{
+	po::options_description result("Python options");
+
+	const fs::path python_path_default = get_python_directory();
+
+	result.add_options()
+	("python.python_path", po::value<fs::path>()->default_value(python_path_default.string()), "The PYTHONPATH to use.")
+	;
+
+	return result;
+}
+
 void setup_configuration(fl::configuration& configuration, const boost::filesystem::path& root, const po::variables_map& vm)
 {
 	typedef fl::security_configuration::cert_type cert_type;
@@ -439,6 +453,9 @@ void setup_configuration(fl::configuration& configuration, const boost::filesyst
 	configuration.router.internal_route_acceptance_policy = vm["router.internal_route_acceptance_policy"].as<fl::router_configuration::internal_route_scope_type>();
 	configuration.router.system_route_acceptance_policy = vm["router.system_route_acceptance_policy"].as<fl::router_configuration::system_route_scope_type>();
 	configuration.router.maximum_routes_limit = vm["router.maximum_routes_limit"].as<unsigned int>();
+
+	// Python
+	configuration.python.python_path = vm["python.python_path"].as<fs::path>();
 }
 
 boost::filesystem::path get_tap_adapter_up_script(const boost::filesystem::path& root, const boost::program_options::variables_map& vm)
